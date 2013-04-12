@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY terms "http://purl.org/dc/terms/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://purl.org/NET/ctte/"
+     xml:base="http://purl.org/NET/ctte/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://purl.org/NET/ctte/">
+        <rdfs:label>A committee ontology</rdfs:label>
+        <terms:contributor rdf:resource="http://id.alexdutton.co.uk/"/>
+        <owl:imports rdf:resource="http://www.w3.org/2004/02/skos/core"/>
+        <owl:imports rdf:resource="http://www.w3.org/ns/org#"/>
+        <owl:imports rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/NET/ctte/candidatePool -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/candidatePool">
+        <rdfs:label xml:lang="en">has pool of eligible candidates</rdfs:label>
+        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/ElectionMembershipRule"/>
+        <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Group"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/NET/ctte/confersHeadOf -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/confersHeadOf">
+        <rdfs:label xml:lang="en">confers head of</rdfs:label>
+        <dc:description xml:lang="en">Fulfilling the requirements of the membership rule confers leadership of the object Organization.</dc:description>
+        <rdfs:subPropertyOf rdf:resource="http://purl.org/NET/ctte/confersMemberOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/NET/ctte/confersMemberOf -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/confersMemberOf">
+        <rdfs:label xml:lang="en">Fulfilling the requirements of the membership rule confers membership of the object Organization.</rdfs:label>
+        <rdfs:label xml:lang="en">confers membership of</rdfs:label>
+        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/MembershipRule"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/org#Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/NET/ctte/electorate -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/electorate">
+        <rdfs:label xml:lang="en">has electorate</rdfs:label>
+        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/ElectionMembershipRule"/>
+        <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Group"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/NET/ctte/requiresHeadOf -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/requiresHeadOf">
+        <rdfs:label xml:lang="en">requires head of</rdfs:label>
+        <dc:description xml:lang="en">Leadership of the object Organization is required to satisfy this membership rule.</dc:description>
+        <rdfs:subPropertyOf rdf:resource="http://purl.org/NET/ctte/requiresMemberOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/NET/ctte/requiresMemberOf -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/requiresMemberOf">
+        <rdfs:label xml:lang="en">requires membership of</rdfs:label>
+        <dc:description xml:lang="en">Membership of he object Organization is required to satisfy this membership rule.</dc:description>
+        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/ExOfficioMembershipRule"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/org#Organization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/NET/ctte/resultantMembership -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/resultantMembership">
+        <rdfs:label xml:lang="en">resultant membership</rdfs:label>
+        <dc:description xml:lang="en">A membership that resulted from this membership rule.</dc:description>
+        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/MembershipRule"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/org#Membership"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/NET/ctte/Committee -->
+
+    <owl:Class rdf:about="http://purl.org/NET/ctte/Committee">
+        <rdfs:label>committee</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/org#Organization"/>
+        <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Group"/>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/NET/ctte/ElectionMembershipRule -->
+
+    <owl:Class rdf:about="http://purl.org/NET/ctte/ElectionMembershipRule">
+        <rdfs:label xml:lang="en">membership by election</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://purl.org/NET/ctte/MembershipRule"/>
+        <dc:description xml:lang="en">Defines an organizational membership conferred by election</dc:description>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/NET/ctte/ExOfficioMembershipRule -->
+
+    <owl:Class rdf:about="http://purl.org/NET/ctte/ExOfficioMembershipRule">
+        <rdfs:label xml:lang="en">ex officio membership rule</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://purl.org/NET/ctte/MembershipRule"/>
+        <dc:description xml:lang="en">Defines a membership of an organization conferred by virtue of another membership (i.e., ex officio).</dc:description>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/NET/ctte/MembershipRule -->
+
+    <owl:Class rdf:about="http://purl.org/NET/ctte/MembershipRule">
+        <rdfs:label xml:lang="en">membership rule</rdfs:label>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
