@@ -40,6 +40,20 @@
     
 
 
+    <!-- http://purl.org/NET/ctte/byVirtueOf -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/byVirtueOf">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:label xml:lang="en">by virtue of</rdfs:label>
+        <rdfs:comment xml:lang="en">The subject Membership was conferred by the object Membership by virtue of an ExOfficioMembershipRule.</rdfs:comment>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/org#Membership"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/org#Membership"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://purl.org/NET/ctte/candidatePool -->
 
     <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/candidatePool">
