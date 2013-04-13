@@ -6,6 +6,7 @@
     <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
     <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
     <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY skos "http://www.w3.org/2004/02/skos/core#" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
 ]>
@@ -18,10 +19,12 @@
      xmlns:terms="http://purl.org/dc/terms/"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#">
     <owl:Ontology rdf:about="http://purl.org/NET/ctte/">
         <rdfs:label>A committee ontology</rdfs:label>
         <terms:contributor rdf:resource="http://id.alexdutton.co.uk/"/>
+        <owl:imports rdf:resource="http://purl.org/NET/c4dm/event.owl"/>
         <owl:imports rdf:resource="http://www.w3.org/2004/02/skos/core"/>
         <owl:imports rdf:resource="http://www.w3.org/ns/org#"/>
         <owl:imports rdf:resource="http://xmlns.com/foaf/0.1/"/>
@@ -37,6 +40,16 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    
+
+
+    <!-- http://purl.org/NET/ctte/agenda -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/agenda">
+        <rdfs:label xml:lang="en">agenda</rdfs:label>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
+        <rdfs:subPropertyOf rdf:resource="http://purl.org/NET/ctte/document"/>
+    </owl:ObjectProperty>
     
 
 
@@ -60,31 +73,20 @@
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
         <rdfs:label xml:lang="en">has pool of eligible candidates</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
-        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/ElectionMembershipRule"/>
+        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/ElectedPost"/>
         <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Group"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://purl.org/NET/ctte/confersMembershipOf -->
+    <!-- http://purl.org/NET/ctte/document -->
 
-    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/confersMembershipOf">
-        <rdfs:label xml:lang="en">confers membership of</rdfs:label>
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/document">
+        <rdfs:label xml:lang="en">document</rdfs:label>
+        <rdfs:comment xml:lang="en">The object is a document for a meeting.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
-        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/MembershipRule"/>
-        <rdfs:range rdf:resource="http://www.w3.org/ns/org#Organization"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://purl.org/NET/ctte/confersRole -->
-
-    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/confersRole">
-        <rdfs:label xml:lang="en">confers role</rdfs:label>
-        <rdfs:comment xml:lang="en">Satisfying this membership rule confers the object Role.</rdfs:comment>
-        <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
-        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/MembershipRule"/>
-        <rdfs:range rdf:resource="http://www.w3.org/ns/org#Role"/>
+        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/Meeting"/>
+        <rdfs:subPropertyOf rdf:resource="http://xmlns.com/foaf/0.1/page"/>
     </owl:ObjectProperty>
     
 
@@ -93,11 +95,11 @@
 
     <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/electoralSystem">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:label xml:lang="en">uses electoral system</rdfs:label>
-        <rdfs:comment xml:lang="en">The electoral system used to perform an election to an Organization.</rdfs:comment>
+        <rdfs:label xml:lang="en">uses electoral method</rdfs:label>
+        <rdfs:comment xml:lang="en">The method used to elect someone to a Role within an Organization.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
-        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/ElectionMembershipRule"/>
-        <rdfs:range rdf:resource="http://purl.org/NET/ctte/ElectoralSystem"/>
+        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/ElectedPost"/>
+        <rdfs:range rdf:resource="http://purl.org/NET/ctte/ElectoralMethod"/>
     </owl:ObjectProperty>
     
 
@@ -108,46 +110,53 @@
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
         <rdfs:label xml:lang="en">has electorate</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
-        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/ElectionMembershipRule"/>
+        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/ElectedPost"/>
         <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Group"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://purl.org/NET/ctte/requiresMembershipOf -->
+    <!-- http://purl.org/NET/ctte/heldByVirtueOf -->
 
-    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/requiresMembershipOf">
-        <rdfs:label xml:lang="en">requires membership of</rdfs:label>
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/heldByVirtueOf">
+        <rdfs:label xml:lang="en">This Post is held by virtue of holding the object Post.</rdfs:label>
+        <rdfs:label xml:lang="en">held by virtue of</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
-        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/ExOfficioMembershipRule"/>
         <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
-        <rdfs:range rdf:resource="http://www.w3.org/ns/org#Organization"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/org#Post"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/org#Post"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://purl.org/NET/ctte/requiresRole -->
+    <!-- http://purl.org/NET/ctte/meeting -->
 
-    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/requiresRole">
-        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:label xml:lang="en">requires role</rdfs:label>
-        <rdfs:comment xml:lang="en">Satisfying this membership requires an Agent to hold a membership with the object Role</rdfs:comment>
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/meeting">
+        <rdfs:label xml:lang="en">has meeting</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
-        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/ExOfficioMembershipRule"/>
-        <rdfs:range rdf:resource="http://www.w3.org/ns/org#Role"/>
+        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/Committee"/>
+        <rdfs:range rdf:resource="http://purl.org/NET/ctte/Meeting"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://purl.org/NET/ctte/resultantMembership -->
+    <!-- http://purl.org/NET/ctte/minutes -->
 
-    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/resultantMembership">
-        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
-        <rdfs:label xml:lang="en">resultant membership</rdfs:label>
-        <rdfs:comment xml:lang="en">A membership that resulted from this membership rule.</rdfs:comment>
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/minutes">
+        <rdfs:label xml:lang="en">minutes</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
-        <rdfs:domain rdf:resource="http://purl.org/NET/ctte/MembershipRule"/>
-        <rdfs:range rdf:resource="http://www.w3.org/ns/org#Membership"/>
+        <rdfs:subPropertyOf rdf:resource="http://purl.org/NET/ctte/document"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/NET/ctte/report -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/NET/ctte/report">
+        <rdfs:label xml:lang="en">report
+</rdfs:label>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
+        <rdfs:subPropertyOf rdf:resource="http://purl.org/NET/ctte/document"/>
     </owl:ObjectProperty>
     
 
@@ -175,44 +184,43 @@
     
 
 
-    <!-- http://purl.org/NET/ctte/ElectionMembershipRule -->
+    <!-- http://purl.org/NET/ctte/ElectedPost -->
 
-    <owl:Class rdf:about="http://purl.org/NET/ctte/ElectionMembershipRule">
-        <rdfs:label xml:lang="en">membership by election</rdfs:label>
-        <rdfs:subClassOf rdf:resource="http://purl.org/NET/ctte/MembershipRule"/>
-        <rdfs:comment xml:lang="en">Defines an organizational membership conferred by election.</rdfs:comment>
+    <owl:Class rdf:about="http://purl.org/NET/ctte/ElectedPost">
+        <rdfs:label xml:lang="en">post conferred by election</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/org#Post"/>
+        <rdfs:comment xml:lang="en">A post within an organization conferred by election.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
     </owl:Class>
     
 
 
-    <!-- http://purl.org/NET/ctte/ElectoralSystem -->
+    <!-- http://purl.org/NET/ctte/ElectoralMethod -->
 
-    <owl:Class rdf:about="http://purl.org/NET/ctte/ElectoralSystem">
-        <rdfs:label xml:lang="en">electoral system</rdfs:label>
+    <owl:Class rdf:about="http://purl.org/NET/ctte/ElectoralMethod">
+        <rdfs:label xml:lang="en">electoral method</rdfs:label>
         <rdfs:comment xml:lang="en">A method for performing and determining the outcome of elections.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
     </owl:Class>
     
 
 
-    <!-- http://purl.org/NET/ctte/ExOfficioMembershipRule -->
+    <!-- http://purl.org/NET/ctte/ExOfficioPost -->
 
-    <owl:Class rdf:about="http://purl.org/NET/ctte/ExOfficioMembershipRule">
-        <rdfs:label xml:lang="en">ex officio membership rule</rdfs:label>
-        <rdfs:subClassOf rdf:resource="http://purl.org/NET/ctte/MembershipRule"/>
-        <rdfs:comment xml:lang="en">Defines a membership of an organization conferred by virtue of another membership (i.e., ex officio).</rdfs:comment>
+    <owl:Class rdf:about="http://purl.org/NET/ctte/ExOfficioPost">
+        <rdfs:label xml:lang="en">ex officio post</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/org#Post"/>
+        <rdfs:comment xml:lang="en">Defines a post within an organization conferred by virtue of holding another post (i.e., ex officio).</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
     </owl:Class>
     
 
 
-    <!-- http://purl.org/NET/ctte/MembershipRule -->
+    <!-- http://purl.org/NET/ctte/Meeting -->
 
-    <owl:Class rdf:about="http://purl.org/NET/ctte/MembershipRule">
-        <rdfs:label xml:lang="en">membership rule</rdfs:label>
-        <rdfs:comment xml:lang="en">A rule which, when satisfied, confers membership of an organization.</rdfs:comment>
-        <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
+    <owl:Class rdf:about="http://purl.org/NET/ctte/Meeting">
+        <rdfs:label xml:lang="en">meeting</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://purl.org/NET/c4dm/event.owl#Event"/>
     </owl:Class>
     
 
@@ -231,8 +239,26 @@
     <!-- http://purl.org/NET/ctte/alternativeVote -->
 
     <owl:NamedIndividual rdf:about="http://purl.org/NET/ctte/alternativeVote">
-        <rdf:type rdf:resource="http://purl.org/NET/ctte/ElectoralSystem"/>
+        <rdf:type rdf:resource="http://purl.org/NET/ctte/ElectoralMethod"/>
         <rdfs:label xml:lang="en">alternative vote</rdfs:label>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://purl.org/NET/ctte/chair -->
+
+    <owl:NamedIndividual rdf:about="http://purl.org/NET/ctte/chair">
+        <skos:broader rdf:resource="http://www.w3.org/ns/org#Head"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://purl.org/NET/ctte/consensus -->
+
+    <owl:NamedIndividual rdf:about="http://purl.org/NET/ctte/consensus">
+        <rdf:type rdf:resource="http://purl.org/NET/ctte/ElectoralMethod"/>
+        <rdfs:label xml:lang="en">by consensus</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
     </owl:NamedIndividual>
     
@@ -241,7 +267,7 @@
     <!-- http://purl.org/NET/ctte/exhaustiveBallot -->
 
     <owl:NamedIndividual rdf:about="http://purl.org/NET/ctte/exhaustiveBallot">
-        <rdf:type rdf:resource="http://purl.org/NET/ctte/ElectoralSystem"/>
+        <rdf:type rdf:resource="http://purl.org/NET/ctte/ElectoralMethod"/>
         <rdfs:label xml:lang="en">exhaustive ballot</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
     </owl:NamedIndividual>
@@ -251,7 +277,7 @@
     <!-- http://purl.org/NET/ctte/firstPastThePost -->
 
     <owl:NamedIndividual rdf:about="http://purl.org/NET/ctte/firstPastThePost">
-        <rdf:type rdf:resource="http://purl.org/NET/ctte/ElectoralSystem"/>
+        <rdf:type rdf:resource="http://purl.org/NET/ctte/ElectoralMethod"/>
         <rdfs:label xml:lang="en">first past the post</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
     </owl:NamedIndividual>
@@ -261,7 +287,7 @@
     <!-- http://purl.org/NET/ctte/randomBallot -->
 
     <owl:NamedIndividual rdf:about="http://purl.org/NET/ctte/randomBallot">
-        <rdf:type rdf:resource="http://purl.org/NET/ctte/ElectoralSystem"/>
+        <rdf:type rdf:resource="http://purl.org/NET/ctte/ElectoralMethod"/>
         <rdfs:label xml:lang="en">random ballot</rdfs:label>
         <rdfs:isDefinedBy rdf:resource="http://purl.org/NET/ctte/"/>
     </owl:NamedIndividual>
